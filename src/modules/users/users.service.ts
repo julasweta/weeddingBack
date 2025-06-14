@@ -12,20 +12,22 @@ import { Prisma } from '@prisma/client';
 export class UsersService {
   constructor(private prisma: PrismaService) { }
 
-  async createUser(data: {
-    first_name: string;
-    last_name: string;
-    email?: string;
-    role?: Role;
-  }): Promise<User> {
+  async createUser(
+    first_name: string,
+    last_name: string,
+  ): Promise<User> {
     try {
-      return await this.prisma.user.create({
+
+      const userCreated = await this.prisma.user.create({
         data: {
-          ...data,
-          role: data.role || Role.GUEST,
-          email: data.email || '',
+          first_name: first_name,
+          last_name: last_name,
+          role: Role.GUEST,
+          email: '',
+          isConfirmed: false,
         },
       });
+      return userCreated;
     } catch (error) {
       if (
         error instanceof Prisma.PrismaClientKnownRequestError &&
@@ -45,6 +47,7 @@ export class UsersService {
     first_name: string,
     last_name: string,
   ): Promise<User | null> {
+    console.log(`Searching for user with first name: ${first_name} and last name: ${last_name}`);
     return this.prisma.user.findFirst({
       where: {
         first_name,

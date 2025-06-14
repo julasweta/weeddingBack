@@ -1,0 +1,33 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+
+
+
+model User {
+  id           Int         @id @default(autoincrement())
+  first_name   String
+  last_name    String
+  email        String?     @unique
+  role         Role        @default(GUEST)
+  isConfirmed  Boolean     @default(false)
+
+}
+
+
+
+
+// Додаємо новий тип enum для ролей користувачів
+enum Role {
+  ADMIN
+  GUEST
+}

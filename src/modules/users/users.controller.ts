@@ -30,7 +30,7 @@ export class UsersController {
     @Query('first_name') first_name: string,
     @Query('last_name') last_name: string,
   ): Promise<UserModel | null> {
-    console.log(`Searching for user with first name: ${first_name} and last name: ${last_name}`);
+    console.log(`Searching controller : ${first_name} and last name: ${last_name}`);
     return this.usersService.findByFullName(first_name, last_name);
   }
 

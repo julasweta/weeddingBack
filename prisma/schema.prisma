@@ -30,4 +30,5 @@ model User {
 enum Role {
   ADMIN
   GUEST
+  GUEST3
 }

@@ -48,12 +48,14 @@ export class UsersService {
     last_name: string,
   ): Promise<User | null> {
     console.log(`Searching for user with first name: ${first_name} and last name: ${last_name}`);
-    return this.prisma.user.findFirst({
+   const userFind = this.prisma.user.findFirstOrThrow({
       where: {
         first_name,
         last_name,
       },
-    });
+   });
+    console.log(`User found: ${userFind ? JSON.stringify(userFind) : 'not found'}`);
+    return userFind;
   }
 
   async confirm(id: string): Promise<User> {
